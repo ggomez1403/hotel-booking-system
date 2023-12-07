@@ -3,6 +3,9 @@ package com.ggomezr.bookingsystem.application.service;
 import com.ggomezr.bookingsystem.domain.entity.Room;
 import com.ggomezr.bookingsystem.domain.exceptions.RoomNotFoundException;
 import com.ggomezr.bookingsystem.domain.repository.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public record RoomService(RoomRepository roomRepository){
+
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
     }

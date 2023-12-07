@@ -15,12 +15,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Override
     Optional<Reservation> findById(Long id);
 
-    List<Reservation> findByClientId(Long clientId);
+    List<Reservation> findByUserId(Long userId);
 
     List<Reservation> findByRoomId(Long roomId);
 
     List<Reservation> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
 
-    @Query("SELECT r FROM Reservation r WHERE r.clientId = :clientId AND r.startDate BETWEEN :startDate AND :endDate")
-    List<Reservation> findReservationsByClientIdAndDates(@Param("clientId") Long clientId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query("SELECT r FROM Reservation r WHERE r.userId = :userId AND r.startDate BETWEEN :startDate AND :endDate")
+    List<Reservation> findReservationsByUserIdAndDates(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

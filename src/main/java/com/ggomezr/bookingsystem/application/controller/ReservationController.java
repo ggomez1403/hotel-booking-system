@@ -3,12 +3,10 @@ package com.ggomezr.bookingsystem.application.controller;
 import com.ggomezr.bookingsystem.application.service.ReservationService;
 import com.ggomezr.bookingsystem.domain.entity.Reservation;
 import com.ggomezr.bookingsystem.domain.entity.Room;
-import com.ggomezr.bookingsystem.domain.exceptions.ClientNotFoundException;
+import com.ggomezr.bookingsystem.domain.exceptions.UserNotFoundException;
 import com.ggomezr.bookingsystem.domain.exceptions.ReservationNotFoundException;
 import com.ggomezr.bookingsystem.domain.exceptions.RoomNotAvailableException;
-import com.ggomezr.bookingsystem.domain.exceptions.RoomNotFoundException;
 import com.ggomezr.bookingsystem.domain.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +16,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/reservation")
-public class ReservationController {
-    @Autowired
-    private ReservationService reservationService;
-
-    @Autowired
-    private RoomRepository roomRepository;
+public record ReservationController(ReservationService reservationService,
+                                   RoomRepository roomRepository) {
 
     @GetMapping("/reservations")
     public List<Reservation> getAllReservation(){
@@ -36,8 +30,8 @@ public class ReservationController {
     }
 
     @GetMapping
-    public List<Reservation> getReservationByClientId(@RequestParam Long clientId) throws ClientNotFoundException {
-        return reservationService.getReservationsByClientId(clientId);
+    public List<Reservation> getReservationByUserId(@RequestParam Long userId) throws UserNotFoundException {
+        return reservationService.getReservationsByUserId(userId);
     }
 
     @GetMapping("/rooms/{roomId}")
@@ -50,9 +44,9 @@ public class ReservationController {
         return reservationService.getReservationsByDates(startDate, endDate);
     }
 
-    @GetMapping("/dates/{clientId}/{startDate}/{endDate}")
-    public List<Reservation> findReservationsByClientIdAndDates(@PathVariable Long clientId, @PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
-        return reservationService.findReservationsByClientIdAndDates(clientId, startDate, endDate);
+    @GetMapping("/dates/{userId}/{startDate}/{endDate}")
+    public List<Reservation> findReservationsByUserIdAndDates(@PathVariable Long userId, @PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
+        return reservationService.findReservationsByUserIdAndDates(userId, startDate, endDate);
     }
 
     @PostMapping("/reservations")

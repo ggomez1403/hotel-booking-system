@@ -19,8 +19,8 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_id")
-    private Long clientId;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "room_id")
     private Long roomId;

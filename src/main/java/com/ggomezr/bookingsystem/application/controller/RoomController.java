@@ -3,7 +3,6 @@ package com.ggomezr.bookingsystem.application.controller;
 import com.ggomezr.bookingsystem.application.service.RoomService;
 import com.ggomezr.bookingsystem.domain.entity.Room;
 import com.ggomezr.bookingsystem.domain.exceptions.RoomNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/room")
-public class RoomController {
-    @Autowired
-    private RoomService roomService;
+public record RoomController(RoomService roomService) {
 
     @GetMapping("/rooms")
     public List<Room> getAllRooms() {

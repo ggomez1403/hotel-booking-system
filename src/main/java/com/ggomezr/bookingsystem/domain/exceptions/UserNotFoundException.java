@@ -1,7 +1,7 @@
 package com.ggomezr.bookingsystem.domain.exceptions;
 
-public class ClientNotFoundException extends Exception{
-    public ClientNotFoundException(){
+public class UserNotFoundException extends Exception{
+    public UserNotFoundException(){
         super("Client not found");
     }
 }
