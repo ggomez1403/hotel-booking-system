@@ -148,4 +148,19 @@ public class ReservationControllerTest {
 
         verify(reservationService).updateReservation(reservationId, reservationDto);
     }
+
+    @Test
+    public void testGetTotalReservationPriceForUser() {
+
+        int userId = 1;
+        BigDecimal expectedTotal = new BigDecimal(100);
+
+        when(reservationService.getTotalReservationPriceForUser(userId))
+                .thenReturn(expectedTotal);
+
+        BigDecimal actualTotal = reservationController.getTotalReservationPriceForUser(userId);
+
+        assertEquals(expectedTotal, actualTotal);
+        verify(reservationService).getTotalReservationPriceForUser(userId);
+    }
 }
