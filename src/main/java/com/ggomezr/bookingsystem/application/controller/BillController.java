@@ -39,7 +39,7 @@ public record BillController(BillService billService) {
 
     @PutMapping("/bills/{id}")
     public void updateBill(@PathVariable Integer id, @RequestBody BillDto billDto) throws  BillNotFoundException{
-        billService.updateRoom(id, billDto);
+        billService.updateBill(id, billDto);
     }
 
     @DeleteMapping("/bills/{id}")

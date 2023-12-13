@@ -35,7 +35,7 @@ public record BillService(BillRepository billRepository, BillDetailRepository bi
         billRepository.save(bill);
     }
 
-    public void updateRoom(Integer id, BillDto billDto) throws BillNotFoundException{
+    public void updateBill(Integer id, BillDto billDto) throws BillNotFoundException{
         Bill existingBill = billRepository.findById(id).orElseThrow(BillNotFoundException::new);
 
         existingBill.setBillDetail(billDetailRepository.findById(billDto.billDetailId()).orElseThrow(BillNotFoundException::new));

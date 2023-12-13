@@ -1,10 +1,7 @@
 package com.ggomezr.bookingsystem.application.service;
 
-import com.ggomezr.bookingsystem.application.lasting.EMessage;
-import com.ggomezr.bookingsystem.application.lasting.ERole;
 import com.ggomezr.bookingsystem.domain.dto.UserDto;
 import com.ggomezr.bookingsystem.domain.entity.User;
-import com.ggomezr.bookingsystem.domain.exceptions.UserNotAuthorizedException;
 import com.ggomezr.bookingsystem.domain.exceptions.UserNotFoundException;
 import com.ggomezr.bookingsystem.domain.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
