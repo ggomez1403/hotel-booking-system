@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
     @Override
-    Optional<Reservation> findById(Long id);
+    Optional<Reservation> findById(Integer id);
 
-    List<Reservation> findByUserId(Long userId);
+    List<Reservation> findByUserId(Integer userId);
 
-    List<Reservation> findByRoomId(Long roomId);
+    List<Reservation> findByRoomId(Integer roomId);
 
     List<Reservation> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
 
-    @Query("SELECT r FROM Reservation r WHERE r.userId = :userId AND r.startDate BETWEEN :startDate AND :endDate")
-    List<Reservation> findReservationsByUserIdAndDates(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query("SELECT r FROM Reservation r WHERE r.user.id = :userId AND r.startDate BETWEEN :startDate AND :endDate")
+    List<Reservation> findReservationsByUserIdAndDates(@Param("userId") Integer userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

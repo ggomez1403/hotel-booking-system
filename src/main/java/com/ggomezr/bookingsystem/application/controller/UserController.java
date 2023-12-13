@@ -3,9 +3,10 @@ package com.ggomezr.bookingsystem.application.controller;
 import com.ggomezr.bookingsystem.application.service.UserService;
 import com.ggomezr.bookingsystem.domain.dto.UserDto;
 import com.ggomezr.bookingsystem.domain.entity.User;
+import com.ggomezr.bookingsystem.domain.exceptions.UserNotAuthorizedException;
 import com.ggomezr.bookingsystem.domain.exceptions.UserNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,16 +26,9 @@ public record UserController(UserService userService) {
                 getUserById(id);
     }
 
-    @PostMapping("/users")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody UserDto userDto) {
-        userService.createUser(userDto);
-    }
-
     @PutMapping("/users/{id}")
-    public void updateUser(@PathVariable Integer id, @RequestBody User user) throws UserNotFoundException {
-        user.setId(id);
-        userService.updateUser(user);
+    public void updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) throws UserNotFoundException {
+        userService.updateUser(id, userDto);
     }
 
     @DeleteMapping("/users/{id}")

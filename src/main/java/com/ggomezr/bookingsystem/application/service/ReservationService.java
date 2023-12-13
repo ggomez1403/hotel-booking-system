@@ -1,9 +1,15 @@
 package com.ggomezr.bookingsystem.application.service;
 
+import com.ggomezr.bookingsystem.domain.dto.ReservationDto;
 import com.ggomezr.bookingsystem.domain.entity.Reservation;
+import com.ggomezr.bookingsystem.domain.entity.Room;
+import com.ggomezr.bookingsystem.domain.exceptions.RoomNotAvailableException;
+import com.ggomezr.bookingsystem.domain.exceptions.RoomNotFoundException;
 import com.ggomezr.bookingsystem.domain.exceptions.UserNotFoundException;
 import com.ggomezr.bookingsystem.domain.exceptions.ReservationNotFoundException;
 import com.ggomezr.bookingsystem.domain.repository.ReservationRepository;
+import com.ggomezr.bookingsystem.domain.repository.RoomRepository;
+import com.ggomezr.bookingsystem.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,21 +17,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public record ReservationService(ReservationRepository reservationRepository){
+public record ReservationService(ReservationRepository reservationRepository, RoomRepository roomRepository, UserRepository userRepository){
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
 
-    public Optional<Reservation> getReservationById(Long id) throws ReservationNotFoundException {
+    public Optional<Reservation> getReservationById(Integer id) throws ReservationNotFoundException {
         return Optional.ofNullable(reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new));
     }
 
-    public List<Reservation> getReservationsByUserId(Long userId) throws UserNotFoundException {
+    public List<Reservation> getReservationsByUserId(Integer userId) {
         return reservationRepository.findByUserId(userId);
     }
 
-    public List<Reservation> getReservationsByRoomId(Long roomId) {
+    public List<Reservation> getReservationsByRoomId(Integer roomId) {
         return reservationRepository.findByRoomId(roomId);
     }
 
@@ -33,26 +39,39 @@ public record ReservationService(ReservationRepository reservationRepository){
         return reservationRepository.findByStartDateBetween(startDate, endDate);
     }
 
-    public List<Reservation> findReservationsByUserIdAndDates(Long userId, LocalDate startDate, LocalDate endDate){
+    public List<Reservation> getReservationsByUserIdAndDates(Integer userId, LocalDate startDate, LocalDate endDate){
         return reservationRepository.findReservationsByUserIdAndDates(userId, startDate, endDate);
     }
 
-    public void createReservation(Reservation reservation) {
+    public void createReservation(ReservationDto reservationDto) throws UserNotFoundException, RoomNotFoundException, RoomNotAvailableException {
+        Room room = roomRepository.findById(reservationDto.roomId()).orElseThrow(RoomNotFoundException::new);
+
+        if(!room.getAvailable()){
+            throw new RoomNotAvailableException();
+        }
+
+        Reservation reservation = Reservation.builder()
+                .user(userRepository.findById(reservationDto.userId()).orElseThrow(UserNotFoundException::new))
+                .room(roomRepository.findById(reservationDto.roomId()).orElseThrow(RoomNotFoundException::new))
+                .startDate(reservationDto.startDate())
+                .endDate(reservationDto.endDate())
+                .amount(roomRepository.findById(reservationDto.roomId()).orElseThrow(RoomNotFoundException::new).getPrice())
+                .build();
         reservationRepository.save(reservation);
     }
 
-    public void updateReservation(Reservation reservation) throws ReservationNotFoundException {
-        Reservation existingReservation = reservationRepository.findById(reservation.getId()).orElseThrow(ReservationNotFoundException::new);
+    public void updateReservation(Integer id, ReservationDto reservationDto) throws ReservationNotFoundException, UserNotFoundException, RoomNotFoundException {
+        Reservation existingReservation = reservationRepository.findById(id).orElseThrow(ReservationNotFoundException::new);
 
-        existingReservation.setUserId(reservation.getUserId());
-        existingReservation.setRoomId(reservation.getRoomId());
-        existingReservation.setStartDate(reservation.getStartDate());
-        existingReservation.setEndDate(reservation.getEndDate());
+        existingReservation.setUser(userRepository.findById(reservationDto.userId()).orElseThrow(UserNotFoundException::new));
+        existingReservation.setRoom(roomRepository.findById(reservationDto.roomId()).orElseThrow(RoomNotFoundException::new));
+        existingReservation.setStartDate(reservationDto.startDate());
+        existingReservation.setEndDate(reservationDto.endDate());
 
         reservationRepository.save(existingReservation);
     }
 
-    public void deleteReservation(Long id) {
+    public void deleteReservation(Integer id) {
         reservationRepository.deleteById(id);
     }
 }

@@ -12,15 +12,19 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "rooms")
-public class Room {
+@Table(name = "bill_details")
+public class BillDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
-    private Boolean available;
-    private String type;
-    private Integer capacity;
-    private BigDecimal price;
+    private String description;
+    @Column(name = "reservation_amount")
+    private BigDecimal reservationAmount;
+
+    @ManyToOne
+    @JoinColumn(name = "reservation_id", nullable = false)
+    private Reservation reservation;
+
+
 }

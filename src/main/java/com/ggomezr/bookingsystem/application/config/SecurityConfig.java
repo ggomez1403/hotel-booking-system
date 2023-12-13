@@ -21,10 +21,7 @@ public class SecurityConfig{
     private final AuthenticationProvider authenticationProvider;
 
     private static final String[] WHITE_LIST_URL = {
-            "/api/v1/auth/**",
-            "/api/v1/user/**",
-            "/api/v1/room/**",
-            "/api/v1/reservation/**"
+            "/api/v1/auth/**"
     };
 
     @Bean
