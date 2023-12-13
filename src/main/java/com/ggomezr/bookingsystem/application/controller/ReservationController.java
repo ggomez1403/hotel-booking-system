@@ -11,6 +11,7 @@ import com.ggomezr.bookingsystem.domain.repository.RoomRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,13 @@ public record ReservationController(ReservationService reservationService, RoomR
     @GetMapping("/dates/{userId}/{startDate}/{endDate}")
     public List<Reservation> getReservationsByUserIdAndDates(@PathVariable Integer userId, @PathVariable LocalDate startDate, @PathVariable LocalDate endDate){
         return reservationService.getReservationsByUserIdAndDates(userId, startDate, endDate);
+    }
+
+    @GetMapping("/reservations/total/{userId}")
+    public BigDecimal getTotalReservationPriceForUser(@PathVariable Integer userId) {
+
+        return reservationService.getTotalReservationPriceForUser(userId);
+
     }
 
     @PostMapping("/reservations")

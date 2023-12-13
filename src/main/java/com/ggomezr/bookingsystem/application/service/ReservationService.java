@@ -12,6 +12,7 @@ import com.ggomezr.bookingsystem.domain.repository.RoomRepository;
 import com.ggomezr.bookingsystem.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +42,14 @@ public record ReservationService(ReservationRepository reservationRepository, Ro
 
     public List<Reservation> getReservationsByUserIdAndDates(Integer userId, LocalDate startDate, LocalDate endDate){
         return reservationRepository.findReservationsByUserIdAndDates(userId, startDate, endDate);
+    }
+
+    public BigDecimal getTotalReservationPriceForUser(Integer userId) {
+
+        return reservationRepository.findByUserId(userId).stream()
+                .map(Reservation::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
     }
 
     public void createReservation(ReservationDto reservationDto) throws UserNotFoundException, RoomNotFoundException, RoomNotAvailableException {
