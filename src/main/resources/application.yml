@@ -5,9 +5,11 @@ spring:
   application:
     name: hotel_booking_system
   datasource:
-    password: geraldine
-    url: jdbc:postgresql://localhost:5432/hotel_booking_system
-    username: postgres
+    password: ${JDBC_DATABASE_PASSWORD}
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    hikari:
+      maximum-pool-size: ${JDBC_MAX_POOL_SIZE}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
