@@ -5,9 +5,9 @@ spring:
   application:
     name: hotel_booking_system
   datasource:
-    password: ${POSTGRES_PASSWORD}
-    url: ${DATABASE_URL}
-    username: ${POSTGRES_USER}
+    password: cBAB*F253DE*fFCaag5Db2bC2Dfdba-3
+    url: postgresql://postgres:cBAB*F253DE*fFCaag5Db2bC2Dfdba-3@roundhouse.proxy.rlwy.net:31486/railway
+    username: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
