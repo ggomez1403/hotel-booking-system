@@ -5,9 +5,9 @@ spring:
   application:
     name: hotel_booking_system
   datasource:
-    password: ${JDBC_DATABASE_PASSWORD}
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    url: ${DATABASE_URL}
+    username: ${POSTGRES_USER}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
