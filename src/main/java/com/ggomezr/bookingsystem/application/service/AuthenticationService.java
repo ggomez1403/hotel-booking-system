@@ -24,7 +24,7 @@ public record AuthenticationService(
                 .email(userDto.email())
                 .enable(true)
                 .password(passwordEncoder.encode(userDto.password()))
-                .role(ERole.USER)
+                .role(userDto.role())
                 .build();
         userRepository.save(user);
         return jwtService.generateToken(user);
