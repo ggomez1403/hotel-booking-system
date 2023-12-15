@@ -9,6 +9,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -61,7 +64,8 @@ public class ApplicationConfig {
                         .version("1.0").contact(new Contact().name("Geraldine Gomez")
                                 .email("geralgomez1403@gmail.com").url("https://www.linkedin.com/in/ggomezr/"))
                         .license(new License().name("License of API")
-                                .url("API license URL")));
+                                .url("API license URL")))
+                .servers(List.of(new Server().url("https://hotel-booking-system-production-dd4f.up.railway.app").description("Production server")));
     }
 
     private SecurityScheme createAPIKeyScheme() {
