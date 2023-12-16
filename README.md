@@ -14,6 +14,8 @@ Hotel Booking System is a robust API built with Spring Boot, offering a seamless
 ## 🚀 Features
 - RESTful Services: Efficiently handle booking, user management, and more.
 - Spring Security: Robust security for user authentication.
+- Role-Based Access Control: Enhanced security with role-based permissions for different API endpoints.
+- JWT Authentication: Secure token generation upon user registration for subsequent API requests.
 - Swagger Integration: Easy-to-use interface for API interaction.
 
 ## 🎈 Getting Started 
@@ -24,6 +26,11 @@ To start using this API, clone the repo and follow these steps:
 3. Navigate to the project directory: `cd hotel-booking-system`
 4. Navigate to the project directory and run `mvnw spring-boot:run`
 5. Access the API through the provided endpoints.
+
+## 🔐 User Registration and Authentication
+- Upon registering, users receive a JWT token in the response.
+- Use this token to authorize further API requests by entering it in the Swagger UI's 'Authorize' button.
+- Role-Based Access: Explore different levels of access and operations based on user roles (ADMIN, USER).
 
 ## 📚 Documentation
 - Visit the Swagger UI for detailed API documentation: [Swagger UI](https://hotel-booking-system-production-dd4f.up.railway.app/swagger-ui/index.html)
