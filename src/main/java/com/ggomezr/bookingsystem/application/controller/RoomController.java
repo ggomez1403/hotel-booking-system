@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/room")
-public record RoomController(RoomService roomService) {
+public class RoomController {
+
+    private final RoomService roomService;
+
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @Operation(summary = "Get all rooms")
     @ApiResponses(value = {
@@ -59,6 +66,7 @@ public record RoomController(RoomService roomService) {
     })
     @PostMapping("/rooms")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void createRoom(@RequestBody RoomDto roomDto) {
         roomService.createRoom(roomDto);
     }
@@ -73,6 +81,7 @@ public record RoomController(RoomService roomService) {
             @ApiResponse(responseCode = "403", description = "Room could not be updated", content = @Content)
     })
     @PutMapping("/rooms/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void updateRoom(@Parameter(description = "Room id", example = "1")@PathVariable Integer id, @RequestBody RoomDto roomDto) throws RoomNotFoundException {
         roomService.updateRoom(id, roomDto);
     }
@@ -87,6 +96,7 @@ public record RoomController(RoomService roomService) {
             @ApiResponse(responseCode = "403", description = "Room could not be deleted", content = @Content)
     })
     @DeleteMapping("/rooms/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteRoom(@Parameter(description = "Room id", example = "1")@PathVariable Integer id) {
         roomService.deleteRoom(id);
     }

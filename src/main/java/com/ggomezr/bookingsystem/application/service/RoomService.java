@@ -10,7 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public record RoomService(RoomRepository roomRepository){
+public class RoomService{
+
+    private final RoomRepository roomRepository;
+
+    public RoomService(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     public List<Room> getAllRooms() {
         return roomRepository.findAll();

@@ -13,7 +13,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public record BillService(BillRepository billRepository, BillDetailRepository billDetailRepository) {
+public class BillService {
+
+    private final BillRepository billRepository;
+    private final BillDetailRepository billDetailRepository;
+
+    public BillService(BillRepository billRepository, BillDetailRepository billDetailRepository) {
+        this.billRepository = billRepository;
+        this.billDetailRepository = billDetailRepository;
+    }
+
     public List<Bill> getAllBills(){
         return billRepository.findAll();
     }

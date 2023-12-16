@@ -12,7 +12,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public record BillDetailService(BillDetailRepository billDetailRepository, ReservationRepository reservationRepository) {
+public class BillDetailService {
+
+    private final BillDetailRepository billDetailRepository;
+    private final ReservationRepository reservationRepository;
+
+    public BillDetailService(BillDetailRepository billDetailRepository, ReservationRepository reservationRepository) {
+        this.billDetailRepository = billDetailRepository;
+        this.reservationRepository = reservationRepository;
+    }
+
     public List<BillDetail> getAllBillDetails(){
         return billDetailRepository.findAll();
     }

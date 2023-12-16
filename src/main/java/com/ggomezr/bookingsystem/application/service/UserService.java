@@ -11,7 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public record UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+public class UserService{
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

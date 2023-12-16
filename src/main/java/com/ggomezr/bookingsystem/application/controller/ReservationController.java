@@ -3,12 +3,10 @@ package com.ggomezr.bookingsystem.application.controller;
 import com.ggomezr.bookingsystem.application.service.ReservationService;
 import com.ggomezr.bookingsystem.domain.dto.ReservationDto;
 import com.ggomezr.bookingsystem.domain.entity.Reservation;
-import com.ggomezr.bookingsystem.domain.entity.Room;
 import com.ggomezr.bookingsystem.domain.exceptions.RoomNotAvailableException;
 import com.ggomezr.bookingsystem.domain.exceptions.RoomNotFoundException;
 import com.ggomezr.bookingsystem.domain.exceptions.UserNotFoundException;
 import com.ggomezr.bookingsystem.domain.exceptions.ReservationNotFoundException;
-import com.ggomezr.bookingsystem.domain.repository.RoomRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -25,7 +24,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/reservation")
-public record ReservationController(ReservationService reservationService, RoomRepository roomRepository) {
+public class ReservationController {
+
+    private final ReservationService reservationService;
+
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @Operation(summary = "Get all reservations")
     @ApiResponses(value = {
@@ -37,6 +42,7 @@ public record ReservationController(ReservationService reservationService, RoomR
             @ApiResponse(responseCode = "403", description = "No reservations found", content = @Content)
     })
     @GetMapping("/reservations")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<Reservation> getAllReservation(){
         return reservationService.getAllReservations();
     }
@@ -79,6 +85,7 @@ public record ReservationController(ReservationService reservationService, RoomR
             @ApiResponse(responseCode = "403", description = "No reservations found", content = @Content)
     })
     @GetMapping("/rooms/{roomId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<Reservation> getReservationsByRoomId(@Parameter(description = "Room id", example = "1")@PathVariable Integer roomId){
         return reservationService.getReservationsByRoomId(roomId);
     }
@@ -93,6 +100,7 @@ public record ReservationController(ReservationService reservationService, RoomR
             @ApiResponse(responseCode = "403", description = "No reservations found", content = @Content)
     })
     @GetMapping("/dates/{startDate}/{endDate}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<Reservation> getReservationsByDates(@Parameter(description = "Start and end reservation dates", example = "/2023-12-20/2023-12-31")@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
         return reservationService.getReservationsByDates(startDate, endDate);
     }

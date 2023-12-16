@@ -17,12 +17,14 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 @Service
-public record JwtService(
-        @Value("${application.security.jwt.secret-key}")
-        String secretKey,
+public class JwtService{
 
-        @Value("${application.security.jwt.expiration}")
-        Long jwtExpiration) {
+    @Value("${application.security.jwt.secret-key}")
+    private String secretKey;
+
+    @Value("${application.security.jwt.expiration}")
+    private Long jwtExpiration;
+
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }

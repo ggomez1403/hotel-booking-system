@@ -18,7 +18,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public record ReservationService(ReservationRepository reservationRepository, RoomRepository roomRepository, UserRepository userRepository){
+public class ReservationService{
+
+    private final ReservationRepository reservationRepository;
+    private final RoomRepository roomRepository;
+    private final UserRepository userRepository;
+
+    public ReservationService(ReservationRepository reservationRepository, RoomRepository roomRepository, UserRepository userRepository) {
+        this.reservationRepository = reservationRepository;
+        this.roomRepository = roomRepository;
+        this.userRepository = userRepository;
+    }
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();

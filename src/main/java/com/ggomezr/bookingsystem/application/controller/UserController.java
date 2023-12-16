@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/user")
-public record UserController(UserService userService) {
+public class UserController{
+
+    private final UserService userService;
+
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
 
     @Operation(summary = "Get all users")
     @ApiResponses(value = {
@@ -29,6 +36,7 @@ public record UserController(UserService userService) {
             @ApiResponse(responseCode = "403", description = "No users found", content = @Content)
     })
     @GetMapping("/users")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
