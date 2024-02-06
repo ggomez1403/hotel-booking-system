@@ -39,6 +39,8 @@ public class UserService{
             existingUser.setPassword(passwordEncoder.encode(userDto.password()));
         }
 
+        existingUser.setPhoneNumber(userDto.phoneNumber());
+
         if(userDto.role() != null){
             existingUser.setRole(userDto.role());
         }

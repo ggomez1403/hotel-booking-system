@@ -30,6 +30,10 @@ public class BillDetailService {
         return Optional.ofNullable(billDetailRepository.findById(id).orElseThrow(BillDetailNotFoundException::new));
     }
 
+    public List<BillDetail> getBillDetailsByReservation(Integer reservationId){
+        return billDetailRepository.findByReservationId(reservationId);
+    }
+
     public void createBillDetail(BillDetailDto billDetailDto) throws ReservationNotFoundException {
         BillDetail billDetail = BillDetail.builder()
                 .reservation(reservationRepository.findById(billDetailDto.reservationId()).orElseThrow(ReservationNotFoundException::new))

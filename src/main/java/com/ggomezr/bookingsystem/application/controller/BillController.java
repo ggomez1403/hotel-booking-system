@@ -58,7 +58,7 @@ public class BillController {
         return billService.getBillById(id);
     }
 
-    @Operation(summary = "Get bills by issued date")
+    @Operation(summary = "Get bill by bill detail id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Bill found successfully",
                     content = {
@@ -68,9 +68,8 @@ public class BillController {
             @ApiResponse(responseCode = "403", description = "Bill not found", content = @Content)
     })
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Bill> getBillsByIssuedDate(@Parameter(description = "Issued date", example = "?issuedDate=2023-12-12")@RequestParam LocalDate issuedDate){
-        return billService.getBillsByIssuedDate(issuedDate);
+    public List<Bill> getBillByBillDetail(@Parameter(description = "Bill Detail Id", example = "?billDetailId=1")@RequestParam Integer billDetailId){
+        return billService.getBillByBillDetailId(billDetailId);
     }
 
     @Operation(summary = "Create bill")
@@ -84,7 +83,6 @@ public class BillController {
     })
     @PostMapping("/bills")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void createBill(@RequestBody BillDto billDto) throws BillDetailNotFoundException {
         billService.createBill(billDto);
     }
@@ -114,7 +112,6 @@ public class BillController {
             @ApiResponse(responseCode = "403", description = "Bill could not be deleted", content = @Content)
     })
     @DeleteMapping("/bills/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteBill(@Parameter(description = "Bill id", example = "1")@PathVariable Integer id){
         billService.deleteBill(id);
     }

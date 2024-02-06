@@ -31,8 +31,8 @@ public class BillService {
         return Optional.ofNullable(billRepository.findById(id).orElseThrow(BillNotFoundException::new));
     }
 
-    public List<Bill> getBillsByIssuedDate(LocalDate issuedDate){
-        return billRepository.findByIssuedDate(issuedDate);
+    public List<Bill> getBillByBillDetailId(Integer billDetailId) {
+        return billRepository.findByBillDetailId(billDetailId);
     }
 
     public void createBill(BillDto billDto) throws BillDetailNotFoundException {

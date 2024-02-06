@@ -39,7 +39,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetUserById() throws Exception {
-        User expectedUser = new User(1, "John", "Doe", "email@email.com","password", true, ERole.USER);
+        User expectedUser = new User(1, "John", "Doe", "email@email.com","123465789", "password", true, ERole.USER);
         when(userService.getUserById(1)).thenReturn(Optional.of(expectedUser));
 
         Optional<User> actualUser = userController.getUserById(1);
@@ -51,9 +51,9 @@ public class UserControllerTest {
     @Test
     public void testUpdateUser() throws Exception {
         Integer id = 1;
-        UserDto updatedUserDto = new UserDto(1, "Jane", "Doe", "email@email.com", "newPass", true, ERole.USER);
+        UserDto updatedUserDto = new UserDto(1, "Jane", "Doe", "email@email.com","123465789", "newPass", true, ERole.USER);
 
-        User existingUser = new User(1, "John", "Doe", "email@email.com", "oldPass", true, ERole.USER);
+        User existingUser = new User(1, "John", "Doe", "email@email.com", "123456798", "oldPass", true, ERole.USER);
         when(userService.getUserById(id)).thenReturn(Optional.of(existingUser));
 
         userController.updateUser(id, updatedUserDto);

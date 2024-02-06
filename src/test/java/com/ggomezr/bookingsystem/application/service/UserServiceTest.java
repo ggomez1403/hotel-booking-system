@@ -58,7 +58,7 @@ public class UserServiceTest {
     public void testUpdateUser() throws UserNotFoundException {
         Integer id = 1;
         User existingUser = new User();
-        UserDto userDto = new UserDto(null, "New First", "New Last", null, "newPass", null, null);
+        UserDto userDto = new UserDto(null, "New First", "New Last", null, "123456789", "newPass", null, null);
 
         when(userRepository.findById(id)).thenReturn(Optional.of(existingUser));
         when(passwordEncoder.encode("newPass")).thenReturn("encodedPass");

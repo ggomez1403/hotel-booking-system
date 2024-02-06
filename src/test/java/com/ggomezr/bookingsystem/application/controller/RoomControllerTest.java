@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +50,16 @@ public class RoomControllerTest {
 
     @Test
     public void testCreateRoom() {
-        RoomDto newRoomDto = new RoomDto(1, "Room 1", true,
-                "Single", 2, new BigDecimal(50));
+        RoomDto newRoomDto = new RoomDto(1, "Room 1", "", true,
+                "Single", 2, new BigDecimal(50),
+                new BigDecimal(10), new BigDecimal(70),
+                Arrays.asList("Toallas", "Champú", "Jabón"),
+                Arrays.asList("Cama King Size", "Armario"),
+                Arrays.asList("TV", "Minibar"),
+                Arrays.asList("Desayuno incluido"),
+                Arrays.asList("Wi-Fi gratuito"),
+                Arrays.asList("Vistas panorámicas"),
+                Arrays.asList("Piscina, Gimnasio"));
 
         roomController.createRoom(newRoomDto);
 
@@ -60,8 +69,16 @@ public class RoomControllerTest {
     @Test
     public void testUpdateRoom() throws Exception {
         Integer roomId = 1;
-        RoomDto updatedRoomDto = new RoomDto(1, "Updated Name",
-                false, "Double", 4, new BigDecimal(75));
+        RoomDto updatedRoomDto = new RoomDto(1, "Room 1", "", true,
+                "Single", 2, new BigDecimal(50),
+                new BigDecimal(10), new BigDecimal(70),
+                Arrays.asList("Toallas", "Champú", "Jabón"),
+                Arrays.asList("Cama King Size", "Armario"),
+                Arrays.asList("TV", "Minibar"),
+                Arrays.asList("Desayuno incluido"),
+                Arrays.asList("Wi-Fi gratuito"),
+                Arrays.asList("Vistas panorámicas"),
+                Arrays.asList("Piscina, Gimnasio"));
 
         Room existingRoom = Room.builder().id(roomId).build();
 

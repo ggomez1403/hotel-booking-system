@@ -9,6 +9,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 @Service
 public class AuthenticationService {
 
@@ -29,12 +31,14 @@ public class AuthenticationService {
                 .firstName(userDto.firstName())
                 .lastName(userDto.lastName())
                 .email(userDto.email())
+                .phoneNumber(userDto.phoneNumber())
                 .enable(true)
                 .password(passwordEncoder.encode(userDto.password()))
                 .role(userDto.role())
                 .build();
         userRepository.save(user);
         return jwtService.generateToken(user);
+
     }
 
     public String authenticate(AuthenticationDto authenticationDto){
@@ -45,6 +49,13 @@ public class AuthenticationService {
                 )
         );
         User user = userRepository.findUserByEmail(authenticationDto.email()).orElseThrow();
-        return jwtService.generateToken(user);
+        HashMap<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("id", user.getId());
+        extraClaims.put("firstName", user.getFirstName());
+        extraClaims.put("lastName", user.getLastName());
+        extraClaims.put("phoneNumber", user.getPhoneNumber());
+        extraClaims.put("role", user.getRole());
+        System.out.println(extraClaims);
+        return jwtService.generateToken(extraClaims, user);
     }
 }

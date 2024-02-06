@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,9 +75,11 @@ public class ReservationService{
                 .room(roomRepository.findById(reservationDto.roomId()).orElseThrow(RoomNotFoundException::new))
                 .startDate(reservationDto.startDate())
                 .endDate(reservationDto.endDate())
-                .amount(roomRepository.findById(reservationDto.roomId()).orElseThrow(RoomNotFoundException::new).getPrice())
+                .amount(roomRepository.findById(reservationDto.roomId()).orElseThrow(RoomNotFoundException::new).getTotalPrice().multiply(BigDecimal.valueOf(ChronoUnit.DAYS.between(reservationDto.startDate(), reservationDto.endDate()))))
                 .build();
+        room.setAvailable(false);
         reservationRepository.save(reservation);
+
     }
 
     public void updateReservation(Integer id, ReservationDto reservationDto) throws ReservationNotFoundException, UserNotFoundException, RoomNotFoundException {

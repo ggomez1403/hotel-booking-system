@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -148,7 +149,9 @@ public class ReservationServiceTest {
         Room room = Room.builder()
                 .id(1)
                 .available(true)
-                .price(BigDecimal.TEN)
+                .initialPrice(BigDecimal.TEN)
+                .taxesAndFees(BigDecimal.ONE)
+                .totalPrice(BigDecimal.TEN.add(BigDecimal.ONE))
                 .build();
 
         User user = User.builder().id(1).build();
@@ -161,10 +164,12 @@ public class ReservationServiceTest {
 
         reservationService.createReservation(reservationDto);
 
+        BigDecimal expectedAmount = room.getTotalPrice().multiply(BigDecimal.valueOf(ChronoUnit.DAYS.between(reservationDto.startDate(), reservationDto.endDate())));
+
         verify(reservationRepository).save(argThat(r -> {
             assertEquals(user, r.getUser());
             assertEquals(room, r.getRoom());
-            assertEquals(room.getPrice(), r.getAmount());
+            assertEquals(expectedAmount, r.getAmount());
             return true;
         }));
     }

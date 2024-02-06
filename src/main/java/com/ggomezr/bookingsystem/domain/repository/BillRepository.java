@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Override
     Optional<Bill> findById(Integer integer);
-    List<Bill> findByIssuedDate(LocalDate issuedDate);
+    List<Bill> findByBillDetailId(Integer billDetailId);
 }

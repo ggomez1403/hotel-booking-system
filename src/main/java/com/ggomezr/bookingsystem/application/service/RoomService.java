@@ -29,10 +29,20 @@ public class RoomService{
     public void createRoom(RoomDto roomDto) {
         Room room = Room.builder()
                 .name(roomDto.name())
-                .available(roomDto.available())
+                .imgUrl(roomDto.imgUrl())
+                .available(true)
                 .type(roomDto.type())
                 .capacity(roomDto.capacity())
-                .price(roomDto.price())
+                .initialPrice(roomDto.initialPrice())
+                .taxesAndFees(roomDto.taxesAndFees())
+                .totalPrice(roomDto.initialPrice().add(roomDto.taxesAndFees()))
+                .bathroomAmenities(roomDto.bathroomAmenities())
+                .bedroomAmenities(roomDto.bedroomAmenities())
+                .entertainmentAmenities(roomDto.entertainmentAmenities())
+                .foodAndDrinksAmenities(roomDto.foodAndDrinksAmenities())
+                .internetAmenities(roomDto.internetAmenities())
+                .moreAmenities(roomDto.moreAmenities())
+                .highlights(roomDto.highlights())
                 .build();
         roomRepository.save(room);
     }
@@ -41,10 +51,20 @@ public class RoomService{
         Room existingRoom = roomRepository.findById(id).orElseThrow(RoomNotFoundException::new);
 
         existingRoom.setName(roomDto.name());
+        existingRoom.setImgUrl(roomDto.imgUrl());
         existingRoom.setAvailable(roomDto.available());
         existingRoom.setType(roomDto.type());
         existingRoom.setCapacity(roomDto.capacity());
-        existingRoom.setPrice(roomDto.price());
+        existingRoom.setInitialPrice(roomDto.initialPrice());
+        existingRoom.setTaxesAndFees(roomDto.taxesAndFees());
+        existingRoom.setTotalPrice(roomDto.initialPrice().add(roomDto.taxesAndFees()));
+        existingRoom.setBathroomAmenities(roomDto.bathroomAmenities());
+        existingRoom.setBedroomAmenities(roomDto.bedroomAmenities());
+        existingRoom.setEntertainmentAmenities(roomDto.entertainmentAmenities());
+        existingRoom.setFoodAndDrinksAmenities(roomDto.foodAndDrinksAmenities());
+        existingRoom.setInternetAmenities(roomDto.internetAmenities());
+        existingRoom.setMoreAmenities(roomDto.moreAmenities());
+        existingRoom.setHighlights(roomDto.highlights());
 
         roomRepository.save(existingRoom);
     }

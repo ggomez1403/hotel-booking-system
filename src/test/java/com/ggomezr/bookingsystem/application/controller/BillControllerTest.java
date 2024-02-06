@@ -55,19 +55,6 @@ public class BillControllerTest {
     }
 
     @Test
-    public void testGetBillsByIssuedDate() {
-        LocalDate date = LocalDate.of(2023, 1, 1);
-        List<Bill> bills = Arrays.asList(new Bill(), new Bill());
-
-        when(billService.getBillsByIssuedDate(date)).thenReturn(bills);
-
-        List<Bill> result = billController.getBillsByIssuedDate(date);
-
-        assertEquals(bills, result);
-        verify(billService).getBillsByIssuedDate(date);
-    }
-
-    @Test
     public void testCreateBill() throws BillDetailNotFoundException {
         BillDto billDto = new BillDto(null, 1, BigDecimal.TEN, LocalDate.now());
 

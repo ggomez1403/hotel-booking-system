@@ -57,6 +57,20 @@ public class BillDetailController {
         return billDetailService.getBillDetailById(id);
     }
 
+    @Operation(summary = "Get bill detail by reservation id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Bill details found successfully",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = BillDetail.class))
+                    }),
+            @ApiResponse(responseCode = "403", description = "Bill details not found", content = @Content)
+    })
+    @GetMapping
+    public List<BillDetail> getBillDetailsByUserId(@Parameter(description = "User id", example = "?userId=1")@RequestParam Integer reservationId) {
+        return billDetailService.getBillDetailsByReservation(reservationId);
+    }
+
     @Operation(summary = "Create bill detail")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Bill detail created successfully",
@@ -97,7 +111,6 @@ public class BillDetailController {
             @ApiResponse(responseCode = "403", description = "Bill detail could not be deleted", content = @Content)
     })
     @DeleteMapping("/bill-details/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteBillDetail(@Parameter(description = "Bill detail id", example = "1")@PathVariable Integer id){
         billDetailService.deleteBillDetail(id);
     }

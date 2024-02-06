@@ -61,19 +61,6 @@ public class BillServiceTest {
     }
 
     @Test
-    public void getBillByIssuedDate(){
-        LocalDate issuedDate = LocalDate.now();
-        List<Bill> expectedBills = new ArrayList<>();
-
-        when(billRepository.findByIssuedDate(issuedDate)).thenReturn(expectedBills);
-
-        List<Bill> actualBills = billService.getBillsByIssuedDate(issuedDate);
-
-        verify(billRepository).findByIssuedDate(issuedDate);
-        assertEquals(expectedBills, actualBills);
-    }
-
-    @Test
     public void testCreateBill() throws Exception {
         BillDetail billDetail = BillDetail.builder()
                 .id(1)

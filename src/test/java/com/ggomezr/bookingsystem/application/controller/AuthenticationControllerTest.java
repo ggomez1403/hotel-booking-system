@@ -25,7 +25,7 @@ public class AuthenticationControllerTest {
 
     @Test
     public void testRegister() {
-        UserDto userDto = new UserDto(1,"Juan", "Perez", "jperez@email.com", "password123", true, ERole.USER);
+        UserDto userDto = new UserDto(1,"Juan", "Perez", "jperez@email.com", "123456789", "password123", true, ERole.USER);
         String token = "token-123";
 
         when(authenticationService.register(userDto)).thenReturn(token);
