@@ -5,19 +5,19 @@ spring:
   application:
     name: hotel_booking_system
   datasource:
-    password: geraldine
-    url: jdbc:postgresql://localhost:5432/hotel_booking_system
+    url: jdbc:postgresql://hotel-booking-db.c9cmqoimyxit.us-east-2.rds.amazonaws.com/hotel_booking
     username: postgres
+    password: Test123!
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
 application:
   security:
     jwt:
