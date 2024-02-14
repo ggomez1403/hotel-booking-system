@@ -33,7 +33,7 @@ To start using this API, clone the repo and follow these steps:
 - Role-Based Access: Explore different levels of access and operations based on user roles (ADMIN, USER).
 
 ## 📚 Documentation
-- Visit the Swagger UI for detailed API documentation: [Swagger UI](http://3.129.17.25:8080/swagger-ui/index.html#)
+- Visit the Swagger UI for detailed API documentation
 
 ## 🤝Contributing 
 Feel free to fork this repo and submit pull requests. For major changes, please open an issue first to discuss what you would like to change.
